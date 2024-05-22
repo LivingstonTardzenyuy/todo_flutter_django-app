@@ -58,13 +58,18 @@ class HomePage extends StatelessWidget {
         itemCount: todoProvider.todos.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(todoProvider.todos[index].title),
+            title: Text(todoProvider.todos[index].title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800
+              ),
+            ),
             subtitle: Text(todoProvider.todos[index].description),
             trailing: IconButton(
               onPressed: () {
                 todoProvider.deleteTodo(todoProvider.todos[index]);
               },
-              icon: Icon(Icons.description)
+              icon: Icon(Icons.delete, color: Colors.red,)
             ),
           );
         }
