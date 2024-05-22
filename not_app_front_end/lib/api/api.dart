@@ -39,8 +39,22 @@ class TodoProvider with ChangeNotifier{
           body: json.encode(todo)
     );
     if(response.statusCode == 201){
+      todo.id = json.decode(response.body)['id'];
       _todos.add(todo);
       notifyListeners();
     }
+  }
+
+  void deleteTodo(Todo todo) async{
+    final response = await http.delete(
+      Uri.parse(
+        '$baseUrl/apis/v1/${todo.id}/',
+        )
+      );
+
+      if (response.statusCode == 204){
+        _todos.remove(todo);
+        notifyListeners();
+      }
   }
 }

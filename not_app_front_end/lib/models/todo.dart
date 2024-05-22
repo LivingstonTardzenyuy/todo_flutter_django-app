@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Todo{
-  final int? id;
+   int? id;
   final String title;
   final String description;
 
