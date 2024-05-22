@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:not_app_front_end/api/api.dart';
+import 'package:not_app_front_end/screens/add_todo.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +13,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TodoProvider())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
     );
   }
 }
@@ -28,10 +36,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo App'),
+        backgroundColor: Colors.blue,
+        title: Text('Todo App', style: TextStyle(color: Colors.white),),
       ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (
+              context) =>AddTodo()));
+          // todoProvider.addTodo(Todo(title: '', description: ''));
+        },
+        tooltip: 'Add Todo',
+        child: Icon(Icons.add),
+
+      ),
+      body: ListView.builder(
+        itemCount: todoProvider.todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(todoProvider.todos[index].title),
+            subtitle: Text(todoProvider.todos[index].description),
+          );
+        }
+      )
     );
   }
 }
