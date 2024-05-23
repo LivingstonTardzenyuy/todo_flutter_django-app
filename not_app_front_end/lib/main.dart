@@ -30,51 +30,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text('Todo App', style: TextStyle(color: Colors.white),),
-      ),
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (
-              context) =>AddTodo()));
-          // todoProvider.addTodo(Todo(title: '', description: ''));
-        },
-        tooltip: 'Add Todo',
-        child: Icon(Icons.add),
+      body: Container(
 
       ),
-      body: ListView.builder(
-        itemCount: todoProvider.todos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(todoProvider.todos[index].title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w800
-              ),
-            ),
-            subtitle: Text(todoProvider.todos[index].description),
-            trailing: IconButton(
-              onPressed: () {
-                todoProvider.deleteTodo(todoProvider.todos[index]);
-              },
-              icon: Icon(Icons.delete, color: Colors.red,)
-            ),
-          );
-        }
-      )
     );
   }
 }
-
