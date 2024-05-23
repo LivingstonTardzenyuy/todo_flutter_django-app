@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:not_app_front_end/api/api.dart';
-import 'package:not_app_front_end/screens/add_todo.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -24,21 +23,54 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: HomePage(),
       ),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TodoProvider todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
-      body: Container(
-
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        title: const Text('Home',style: TextStyle(color: Colors.white),),
+        centerTitle: true,
       ),
+      body: ListView.builder(
+          itemCount: todoProvider.todos.length,
+          itemBuilder: (BuildContext context, int index){
+            return ListTile(
+              title: Text(
+                  todoProvider.todos[index].title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20
+                ),
+              ),
+              subtitle: Text(
+                todoProvider.todos[index].description,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16
+                ),
+              ),
+              trailing: IconButton(
+                  onPressed: () {
+                    print("you press to delee");
+                    todoProvider.deleteTodo(todoProvider.todos[index]);
+                  },
+                  icon: Icon(Icons.delete, color: Colors.red,)
+              ),
+
+            );
+          }
+      )
     );
   }
 }
+
