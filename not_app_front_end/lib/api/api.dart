@@ -39,4 +39,14 @@ class TodoProvider extends ChangeNotifier{
       notifyListeners();
     }
   }
+
+
+  void addTodo(Todo todo) async{
+    final response = await http.post(Uri.parse("$baseUrl/apis/v1/?format=json"));
+
+    headers: {"Content-Type": "application/json"},
+    body: json.encode()
+
+
+  }
 }

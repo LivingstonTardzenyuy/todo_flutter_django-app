@@ -21,6 +21,10 @@ class Todo{
 
 
   // Convert our dart format string to Json so we can send to backEnd
-
+  dynamic toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+  };
 
 }
