@@ -40,13 +40,29 @@ class TodoProvider extends ChangeNotifier{
     }
   }
 
-
-  void addTodo(Todo todo) async{
-    final response = await http.post(Uri.parse("$baseUrl/apis/v1/?format=json"));
-
-    headers: {"Content-Type": "application/json"},
-    body: json.encode()
-
-
+  updateTodo(Todo todo) async{
+    final response = await http.put(Uri.parse(
+      "$baseUrl/apis/v1/${todo.id}/"),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(todo.toJson())
+    );
+    if (response.statusCode == 200){
+      _todos.remove(todo);
+      _todos.add(todo);
+      notifyListeners();
+    }
+  }
+  void addTodo(Todo todo) async {
+    final response = await http.post(Uri.parse("$baseUrl/apis/v1/"),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(todo.toJson())
+    );
+    if (response.statusCode == 201){
+      todo.id = json.decode(response.body)['id'];       // we write like this b/c the ID is being set from backEnd hence we don't have to define it
+      _todos.add(todo);
+      notifyListeners();
+    } else{
+      throw Exception('Failed to add todo');
+    }
   }
 }
