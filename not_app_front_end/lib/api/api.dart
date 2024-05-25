@@ -29,7 +29,7 @@ class TodoProvider extends ChangeNotifier{
   }
 
 
-  deleteTodo(Todo todo) async {
+  Future<void> deleteTodo(Todo todo) async {
     final response = await http.delete(Uri.parse(
         "$baseUrl/apis/v1/${todo.id}/"
     ));
@@ -40,19 +40,19 @@ class TodoProvider extends ChangeNotifier{
     }
   }
 
-  updateTodo(Todo todo) async{
+  Future <void> updateTodo(Todo todo) async{
     final response = await http.put(Uri.parse(
       "$baseUrl/apis/v1/${todo.id}/"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(todo.toJson())
     );
     if (response.statusCode == 200){
-      _todos.remove(todo);
-      _todos.add(todo);
+      // _todos.remove(todo);
+      // _todos.add(todo);
       notifyListeners();
     }
   }
-  void addTodo(Todo todo) async {
+  Future<void> addTodo(Todo todo) async {
     final response = await http.post(Uri.parse("$baseUrl/apis/v1/"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(todo.toJson())
