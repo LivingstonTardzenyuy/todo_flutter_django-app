@@ -25,10 +25,18 @@ SECRET_KEY = 'django-insecure-om+d%xkng@b00d5!-y9*911=eqgm+0al@tw26e@@v=^r=-5^19
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "10.0.2.2",    # needed by our andriod emulator
+    "0.0.0.0",
+    "localhost",
+    '127.0.0.1'
+    # "127.0.0.1"
+    # "*"
+    
+]
 
 
-# Application definition
+#  Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
